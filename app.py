@@ -10,10 +10,12 @@ def calcular_digito_verificador_ean13(codigo12):
 def ean13_para_dun14(ean13):
     if len(ean13) != 13 or not ean13.isdigit():
         raise ValueError("EAN-13 inválido.")
+    
     corpo = ean13[:-1]
-    prefixo = "1"
-    novo_dv = calcular_digito_verificador_ean13(prefixo + corpo)
-    return prefixo + corpo + str(novo_dv)
+    dv_original = int(ean13[-1])
+    novo_dv = (dv_original - 3) % 10  # subtrai 3, mantendo entre 0-9
+    
+    return "1" + corpo + str(novo_dv)
 
 def gerar_novo_codigo_custom(codigo):
     if len(codigo) < 3:
